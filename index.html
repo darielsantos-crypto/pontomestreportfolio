@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://ponto-mestre-portfolio.netlify.app/ -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio – Ponto-Mestre | ARGo FGV</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #222; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    background: #1a2e4a; display: flex; align-items: center;
+    justify-content: space-between; padding: 10px 28px;
+  }
+  nav .logo { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+  nav .logo img { height: 38px; width: auto; }
+  nav .slides-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+  nav .slides-nav button {
+    background: transparent; border: 1px solid #4a7fa5; color: #a8c8e8;
+    padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.72rem;
+    transition: all .2s;
+  }
+  nav .slides-nav button:hover, nav .slides-nav button.active {
+    background: #2e6da4; color: #fff; border-color: #2e6da4;
+  }
+
+
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.25);
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  img { max-width: 100%; }
+
+  .case-row, .closing-grid, .resource-grid, .skills-row, .member-header, .cover-bottom > div {
+    width: 100%;
+  }
+
+  @media (max-width: 1200px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .slide { padding: 40px 36px; }
+    .cover-bottom { margin: 0 -36px -40px; padding: 24px 36px; }
+  }
+
+  @media (max-width: 860px) {
+    nav {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    nav .logo {
+      font-size: .95rem;
+      max-width: calc(100% - 52px);
+    }
+    nav .logo img { height: 34px; }
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+    }
+    nav .slides-nav {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 8px;
+    }
+    nav.open .slides-nav { display: flex; }
+    nav .slides-nav button {
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: .84rem;
+    }
+    .slides { margin-top: 70px; }
+    .slide {
+      min-height: calc(100vh - 70px);
+      padding: 28px 20px;
+    }
+    h1.display { font-size: 2.2rem; }
+    h2.section-title { font-size: 1.7rem; margin-bottom: 18px; }
+    h3 { font-size: 1.05rem; }
+    p { font-size: .92rem; line-height: 1.6; }
+    .grid-2, .grid-3, .grid-4, .closing-grid, .resource-grid, .skills-row, .case-row {
+      grid-template-columns: 1fr;
+    }
+    .member-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .member-info .meta { line-height: 1.5; }
+    .member-card ul.bullet-list,
+    .card ul.bullet-list {
+      columns: 1 !important;
+    }
+    .cover-content > div[style*="display:flex;align-items:center;gap:20px"] {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 12px !important;
+    }
+    .cover-bottom {
+      margin: 0 -20px -28px;
+      padding: 20px;
+    }
+    .cover-bottom > div,
+    .slide-footer {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 8px;
+    }
+    .card, .member-card, .case-card, .closing-item, .diff-item, .value-item {
+      padding: 18px;
+    }
+    .avatar-box,
+    .member-header img {
+      width: 76px !important;
+      height: 76px !important;
+    }
+  }
+
+  @media (max-width: 520px) {
+    body { font-size: 15px; }
+    nav .logo { font-size: .88rem; }
+    .slides { margin-top: 72px; }
+    .slide { padding: 22px 14px; }
+    h1.display { font-size: 1.8rem; line-height: 1.15; }
+    h2.section-title { font-size: 1.45rem; }
+    .subtitle-bar { font-size: .7rem; letter-spacing: 1.4px; }
+    .tag { font-size: .68rem; padding: 4px 9px; }
+    .cover-bottom { margin: 0 -14px -22px; padding: 16px 14px; }
+    .case-card > div:first-child,
+    .value-item,
+    .closing-item,
+    .diff-item {
+      gap: 10px;
+    }
+    .slide-footer { font-size: .68rem; }
+  }
+
+  /* SLIDES CONTAINER */
+  .slides { margin-top: 56px; }
+
+  /* SLIDE BASE */
+  .slide {
+    display: none; min-height: calc(100vh - 56px);
+    padding: 48px 64px; position: relative;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  /* BACKGROUNDS */
+  .bg-wave {
+    background: linear-gradient(160deg, #e8f4fd 0%, #c7e8f5 60%, #a0d4ec 100%);
+  }
+  .bg-dark {
+    background: linear-gradient(135deg, #1a2e4a 0%, #2e4d6d 100%);
+    color: #fff;
+  }
+  .bg-teal {
+    background: linear-gradient(135deg, #e0f7f4 0%, #b2ebf2 100%);
+  }
+  .bg-white { background: #fff; }
+  .bg-soft { background: linear-gradient(160deg, #f5f9ff 0%, #e8f0fb 100%); }
+
+  /* TYPOGRAPHY */
+  h1.display { font-size: 3.2rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+  h2.section-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 28px; }
+  h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+  p { font-size: 0.95rem; line-height: 1.65; }
+  .accent { color: #2e6da4; }
+  .accent-light { color: #7ec8e3; }
+  .tag {
+    display: inline-block; background: #2e6da4; color: #fff;
+    font-size: 0.72rem; padding: 3px 10px; border-radius: 20px;
+    margin: 3px 2px; font-weight: 600;
+  }
+  .tag.soft { background: #27a09e; }
+  .tag.hard { background: #1a5276; }
+
+  /* PLACEHOLDER */
+  .placeholder {
+    border: 2px dashed #aac4de; border-radius: 10px;
+    padding: 20px; color: #7a9bbf; font-size: 0.88rem;
+    font-style: italic; text-align: center; background: rgba(174,214,241,.12);
+    min-height: 70px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 18px; }
+
+  /* CARDS */
+  .card {
+    background: #fff; border-radius: 14px; padding: 24px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  }
+  .card.dark { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: #fff; }
+
+  /* MEMBER CARD */
+  .member-card {
+    background: #fff; border-radius: 16px; padding: 28px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.1); display: flex; flex-direction: column; gap: 14px;
+  }
+  .member-header { display: flex; align-items: flex-start; gap: 18px; }
+  .avatar-box {
+    width: 90px; height: 90px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(135deg, #2e6da4, #7ec8e3);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.6rem; font-weight: 700;
+  }
+  .member-info h3 { font-size: 1.15rem; color: #1a2e4a; margin-bottom: 4px; }
+  .member-info .role { font-size: 0.82rem; color: #2e6da4; font-style: italic; margin-bottom: 6px; }
+  .member-info .meta { font-size: 0.8rem; color: #666; }
+  .skills-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .skills-box h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #2e6da4; margin-bottom: 6px; font-weight: 700; }
+  .bullet-list { list-style: none; }
+  .bullet-list li { font-size: 0.82rem; color: #444; padding: 3px 0; }
+  .bullet-list li::before { content: "▸ "; color: #2e6da4; font-size: 0.75rem; }
+
+  /* VALUE ITEM */
+  .value-item {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,.08); border-radius: 10px; padding: 14px 18px;
+    border-left: 4px solid #7ec8e3;
+  }
+  .value-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+  /* CASE CARD */
+  .case-card {
+    background: #fff; border-radius: 14px; padding: 26px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08); border-top: 4px solid #2e6da4;
+  }
+  .case-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .case-block { background: #f0f7ff; border-radius: 8px; padding: 14px; }
+  .case-block .label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #2e6da4; margin-bottom: 6px; }
+
+  /* DIFFERENTIALS */
+  .diff-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: rgba(255,255,255,.06); border-radius: 12px; padding: 20px;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .diff-num { font-size: 2.2rem; font-weight: 800; color: #7ec8e3; flex-shrink: 0; line-height: 1; }
+
+  /* CLOSING */
+  .closing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .closing-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: rgba(255,255,255,.08); border-radius: 10px; padding: 18px;
+  }
+  .closing-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+  /* SUBTITLE BAR */
+  .subtitle-bar {
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: #2e6da4; margin-bottom: 8px;
+  }
+  .divider { width: 48px; height: 4px; background: #2e6da4; border-radius: 2px; margin: 10px 0 24px; }
+  .divider.light { background: #7ec8e3; }
+
+  /* SLIDE FOOTER */
+  .slide-footer {
+    margin-top: auto; padding-top: 20px;
+    font-size: 0.72rem; color: rgba(0,0,0,.3); letter-spacing: 1px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .slide-footer.light { color: rgba(255,255,255,.3); }
+
+  /* COVER SPECIFIC */
+  .cover-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-bottom {
+    background: linear-gradient(90deg, #1a2e4a, #2e6da4);
+    margin: 0 -64px -48px; padding: 28px 64px;
+    color: #fff; border-radius: 0 0 0 0;
+  }
+
+  /* RESOURCE PAGE */
+  .resource-page { background: #f5f5f5; }
+  .resource-page h2 { color: #333; }
+  .resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .resource-card {
+    background: #fff; border-radius: 10px; padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07); text-align: center;
+  }
+  .resource-card .icon { font-size: 2rem; margin-bottom: 8px; }
+  .resource-card p { font-size: 0.82rem; color: #555; }
+
+  /* PRINT HINT */
+  .print-hint {
+    background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px;
+    padding: 12px 18px; font-size: 0.82rem; color: #856404; margin-bottom: 24px;
+  }
+  .print-hint strong { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/logo.png" alt="Ponto-Mestre"> Ponto-Mestre</div>
+  <button class="nav-toggle" type="button" aria-label="Abrir navegação" onclick="toggleNav()">☰</button>
+  <div class="slides-nav">
+    <button onclick="goTo(0)" class="active">Página Inicial</button>
+    <button onclick="goTo(1)" class="">Diferenciais</button>
+    <button onclick="goTo(2)" class="">A Equipe</button>
+    <button onclick="goTo(3)" class="">Missão &amp; Valores</button>
+    <button onclick="goTo(4)" class="">Experiência</button>
+    <button onclick="goTo(5)" class="">Perfis</button>
+    <button onclick="goTo(6)" class="">Cases</button>
+    <button onclick="goTo(7)" class="">Por que nós?</button>
+  </div>
+</nav>
+
+<div class="slides">
+
+<!-- SLIDE 0: CAPA -->
+<div class="slide bg-wave active" id="s0">
+  <div class="cover-content">
+    <div class="subtitle-bar">ARGo FGV · Etapa 1 · Portfólio</div>
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:4px;">
+      <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/logo.png" alt="Ponto-Mestre" style="height:80px;width:auto;">
+      <h1 class="display" style="color:#1a2e4a;">Ponto<span class="accent">-</span>Mestre</h1>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:1.1rem;color:#2e4d6d;max-width:560px;margin-bottom:32px;">
+      Uma equipe multi complementar que integra <strong>estratégia, execução e ESG</strong> na prática — criando soluções aplicáveis, autênticas e de impacto real.
+    </p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <span class="tag">Finanças</span>
+      <span class="tag">Estratégia</span>
+      <span class="tag">Relações Internacionais</span>
+      <span class="tag">ESG</span>
+      <span class="tag">Consultoria</span>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-size:0.75rem;opacity:.6;letter-spacing:2px;text-transform:uppercase;">Nossa equipe</div>
+        <div style="font-size:0.95rem;font-weight:600;margin-top:4px;">Alain Sena · Alexsandro de Oliveira · Anna Laura Perea · Eduarda Vasques</div>
+      </div>
+      <div style="font-size:0.75rem;opacity:.5;">ARGo FGV · 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 1: DIFERENCIAIS -->
+<div class="slide bg-dark" id="s1">
+  <div class="subtitle-bar" style="color:#7ec8e3;">Por que nos escolher</div>
+  <h2 class="section-title" style="color:#fff;">Nossos Diferenciais</h2>
+  <div class="divider light"></div>
+  <p style="color:rgba(255,255,255,.65);margin-bottom:32px;max-width:600px;">
+    Somos uma equipe com atuação multi complementar — cada integrante traz uma perspectiva única que, juntos, formam uma visão completa e orientada a resultados.
+  </p>
+  <div class="grid-2" style="flex:1;gap:20px;">
+    <div class="diff-item">
+      <div class="diff-num">01</div>
+      <div>
+        <h3 style="color:#fff;">Visão Financeira Estruturada</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.88rem;">Capacidade de transformar dados em decisões claras, com análise de P&amp;L, indicadores e planejamento orientado a resultado.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num">02</div>
+      <div>
+        <h3 style="color:#fff;">Visão Estratégica de Mercado e Eficiência Operacional</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.88rem;">Contribui com visão prática de mercado, aliando experiência empresarial à tomada de decisões estratégicas e foco em eficiência operacional.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num">03</div>
+      <div>
+        <h3 style="color:#fff;">Visão Global e Capacidade de Escalar Operações</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.88rem;">Visão global, capacidade de escalar operações, prevenção a fraudes e forte influência como business partner — experiência executiva real em setores de alta complexidade.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num">04</div>
+      <div>
+        <h3 style="color:#fff;">Visão de Crescimento Centrada no Consumidor</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.88rem;">Capacidade de transformar comportamento e preferências do consumidor em estratégias que impulsionam vendas, experiência de marca e fidelização.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer light"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+<!-- SLIDE 2: A EQUIPE -->
+<div class="slide bg-soft" id="s2">
+  <div class="subtitle-bar">Quem somos</div>
+  <h2 class="section-title" style="color:#1a2e4a;">A Nossa Equipe</h2>
+  <div class="divider"></div>
+  <div class="grid-4" style="flex:1;align-items:start;">
+
+    <!-- Alain -->
+    <div class="card" style="text-align:center;">
+      <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/alan.png" alt="Alain Sena" style="width:70px;height:70px;border-radius:12px;object-fit:cover;margin:0 auto 12px;display:block;">
+      <h3 style="font-size:1rem;color:#1a2e4a;">Alain Sena</h3>
+      <p style="font-size:0.78rem;color:#27a09e;font-style:italic;margin-top:4px;">Administração de Empresas · B2B · São Paulo/SP · 26 anos</p>
+      <div style="margin-top:12px;">
+        <p style="font-size:0.82rem;color:#555;font-style:italic;line-height:1.55;padding:10px 6px;">Impulsionar resultados através de decisões estratégicas, eficiência operacional e visão de mercado.</p>
+      </div>
+      <div style="margin-top:10px;">
+        <span class="tag soft">Proatividade</span>
+        <span class="tag soft">Tomada de Decisões</span>
+        <span class="tag soft">Responsabilidade</span>
+        <span class="tag soft">Comunicação</span>
+      </div>
+    </div>
+
+    <!-- Alexsandro -->
+    <div class="card" style="text-align:center;">
+      <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/alexsandro.png" alt="Alexsandro de Oliveira" style="width:70px;height:70px;border-radius:12px;object-fit:cover;margin:0 auto 12px;display:block;">
+      <h3 style="font-size:1rem;color:#1a2e4a;">Alexsandro de Oliveira</h3>
+      <p style="font-size:0.78rem;color:#1a5276;font-style:italic;margin-top:4px;">Engenharia Civil · Executivo · São Luís/MA · 33 anos</p>
+      <div style="margin-top:12px;">
+        <p style="font-size:0.82rem;color:#555;font-style:italic;line-height:1.55;padding:10px 6px;">Executivo em gestão empresarial, governança corporativa e alta performance operacional.</p>
+      </div>
+      <div style="margin-top:10px;">
+        <span class="tag soft">Liderança empática</span>
+        <span class="tag soft">Visão sistêmica</span>
+        <span class="tag soft">Storytelling</span>
+        <span class="tag soft">Resiliência</span>
+      </div>
+    </div>
+
+    <!-- Anna -->
+    <div class="card" style="text-align:center;">
+      <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/anna.png" alt="Anna Laura Perea" style="width:70px;height:70px;border-radius:12px;object-fit:cover;margin:0 auto 12px;display:block;">
+      <h3 style="font-size:1rem;color:#1a2e4a;">Anna Laura Perea</h3>
+      <p style="font-size:0.78rem;color:#7d3c98;font-style:italic;margin-top:4px;">Marketing Digital · Growth · São Paulo/SP · 25 anos</p>
+      <div style="margin-top:12px;">
+        <p style="font-size:0.82rem;color:#555;font-style:italic;line-height:1.55;padding:10px 6px;">Profissional orientada a crescimento, que transforma dados e comportamento do consumidor em estratégias e produtos que geram impacto real.</p>
+      </div>
+      <div style="margin-top:10px;">
+        <span class="tag soft">Pensamento estratégico</span>
+        <span class="tag soft">Growth mindset</span>
+        <span class="tag soft">Comunicação</span>
+        <span class="tag soft">Autonomia</span>
+      </div>
+    </div>
+
+    <!-- Eduarda -->
+    <div class="card" style="text-align:center;border-top:3px solid #2e6da4;">
+      <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/eduarda.png" alt="Eduarda Vasques" style="width:70px;height:70px;border-radius:12px;object-fit:cover;margin:0 auto 12px;display:block;">
+      <h3 style="font-size:1rem;color:#1a2e4a;">Eduarda Vasques</h3>
+      <p style="font-size:0.78rem;color:#2e6da4;font-style:italic;margin-top:4px;">Finanças · São Paulo/SP · 24 anos</p>
+      <div style="margin-top:12px;">
+        <p style="font-size:0.82rem;color:#555;font-style:italic;line-height:1.55;padding:10px 6px;">Profissional movida por conectar dados financeiros à estratégia, promovendo eficiência e crescimento sustentável.</p>
+      </div>
+      <div style="margin-top:10px;">
+        <span class="tag soft">Planejamento</span>
+        <span class="tag soft">Resiliência</span>
+        <span class="tag soft">Proatividade</span>
+        <span class="tag soft">Adaptabilidade</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-footer"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+<!-- SLIDE 3: MISSÃO & VALORES -->
+<div class="slide bg-dark" id="s3">
+  <div class="subtitle-bar" style="color:#7ec8e3;">Quem somos · Propósito</div>
+  <h2 class="section-title" style="color:#fff;">Missão, Visão &amp; Valores</h2>
+  <div class="divider light"></div>
+  <div class="grid-2" style="margin-bottom:32px;">
+    <div class="card dark">
+      <h3 style="color:#7ec8e3;margin-bottom:10px;">🎯 Missão</h3>
+      <p style="color:rgba(255,255,255,.8);font-size:0.92rem;">Desenvolver soluções estratégicas que impulsionem resultados, promovendo crescimento sustentável e geração de valor para nossos clientes.</p>
+    </div>
+    <div class="card dark">
+      <h3 style="color:#7ec8e3;margin-bottom:10px;">🔭 Visão</h3>
+      <p style="color:rgba(255,255,255,.8);font-size:0.92rem;">Ser referência em consultoria estratégica, reconhecida pela excelência, inovação e impacto positivo nos negócios e na sociedade.</p>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px;flex:1;">
+    <div class="value-item">
+      <div class="value-icon">⚖️</div>
+      <div><h3 style="color:#fff;font-size:1rem;">Ética e Transparência</h3><p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Atuamos com integridade em cada entrega e relacionamento.</p></div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">💡</div>
+      <div><h3 style="color:#fff;font-size:1rem;">Inovação</h3><p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Buscamos sempre novas abordagens para problemas complexos.</p></div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🎯</div>
+      <div><h3 style="color:#fff;font-size:1rem;">Compromisso com o Cliente</h3><p style="color:rgba(255,255,255,.65);font-size:0.85rem;">O sucesso do cliente é o centro de cada decisão que tomamos.</p></div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">📊</div>
+      <div><h3 style="color:#fff;font-size:1rem;">Foco em Resultados</h3><p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Medimos o que fazemos. Resultados viáveis, mensuráveis e de impacto real.</p></div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🌱</div>
+      <div><h3 style="color:#fff;font-size:1rem;">Sustentabilidade (ESG)</h3><p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Integramos ESG à prática — não como discurso, mas como metodologia.</p></div>
+    </div>
+  </div>
+  <div class="slide-footer light"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+<!-- SLIDE 4: EXPERIÊNCIA & ADAPTABILIDADE -->
+<div class="slide bg-teal" id="s4">
+  <div class="subtitle-bar">Diversidade · Adaptação · Cultura</div>
+  <h2 class="section-title" style="color:#1a2e4a;">Experiência e Adaptabilidade</h2>
+  <div class="divider"></div>
+  <p style="color:#2e4d6d;margin-bottom:28px;max-width:680px;">
+    Nossa equipe possui vivência em ambientes diversos e complexos — internacionais, multiculturais e de alta pressão — o que nos torna consultores mais completos e adaptáveis.
+  </p>
+  <div class="grid-2" style="flex:1;align-items:start;gap:20px;">
+
+    <!-- Eduarda -->
+    <div class="card" style="border-left:4px solid #2e6da4;">
+      <h3 style="color:#2e6da4;">Eduarda Vasques</h3>
+      <p style="font-size:0.82rem;color:#666;margin-bottom:10px;">Relações Internacionais · Finanças · São Paulo/SP</p>
+      <ul class="bullet-list">
+        <li>Intercâmbio de 1 ano na <strong>Espanha</strong></li>
+        <li>Contato diário com times de <strong>EUA, Europa e LATAM</strong></li>
+        <li>Atuação em empresa US-based com interface internacional</li>
+        <li>Idiomas: Inglês, Espanhol e Italiano</li>
+      </ul>
+      <div style="margin-top:12px;"><span class="tag">Mente aberta</span><span class="tag">Multicultural</span><span class="tag">Adaptabilidade</span></div>
+    </div>
+
+    <!-- Alain -->
+    <div class="card" style="border-left:4px solid #27a09e;">
+      <h3 style="color:#27a09e;">Alain Sena</h3>
+      <p style="font-size:0.82rem;color:#666;margin-bottom:10px;">Administração de Empresas · B2B · São Paulo/SP</p>
+      <ul class="bullet-list">
+        <li>Atuação no modelo <strong>B2B</strong> com foco em negociação e relacionamento comercial</li>
+        <li>Gestão de operações logísticas, estoque e distribuição</li>
+        <li>Negociação estratégica com fornecedores e clientes nacionais</li>
+        <li>Gestão financeira: custos, margem e fluxo de caixa</li>
+        <li>Liderança e gestão de equipe</li>
+      </ul>
+      <div style="margin-top:12px;"><span class="tag" style="background:#27a09e;">B2B</span><span class="tag" style="background:#27a09e;">Logística</span><span class="tag" style="background:#27a09e;">Operacional</span></div>
+    </div>
+
+    <!-- Alexsandro -->
+    <div class="card" style="border-left:4px solid #1a5276;">
+      <h3 style="color:#1a5276;">Alexsandro de Oliveira</h3>
+      <p style="font-size:0.82rem;color:#666;margin-bottom:10px;">Engenharia Civil · Executivo · Construção, Logística, Agronegócio</p>
+      <ul class="bullet-list">
+        <li>Negociação com <strong>bancos nacionais e estrangeiros</strong> para funding e investimentos</li>
+        <li>Atuação com stakeholders de múltiplos setores e países</li>
+        <li>Ambientes corporativos <strong>multidisciplinares e multiculturais</strong></li>
+        <li>Gestão de operações em Construção, Logística, Engenharia e Agronegócio</li>
+      </ul>
+      <div style="margin-top:12px;"><span class="tag" style="background:#1a5276;">Governança</span><span class="tag" style="background:#1a5276;">Business Partner</span><span class="tag" style="background:#1a5276;">Financeiro</span></div>
+    </div>
+
+    <!-- Anna -->
+    <div class="card" style="border-left:4px solid #7d3c98;">
+      <h3 style="color:#7d3c98;">Anna Laura Perea</h3>
+      <p style="font-size:0.82rem;color:#666;margin-bottom:10px;">Marketing Digital · Growth · Moda · São Paulo/SP</p>
+      <ul class="bullet-list">
+        <li>Atuação com marcas globais como <strong>Dove, TRESemmé e SHEIN</strong></li>
+        <li>Interface com times de marketing e parceiros internacionais</li>
+        <li>Conteúdo para audiências multiculturais (2–3M views mensais)</li>
+        <li>Produto digital com alcance nacional (CoScore)</li>
+      </ul>
+      <div style="margin-top:12px;"><span class="tag" style="background:#7d3c98;">Marcas globais</span><span class="tag" style="background:#7d3c98;">Digital</span><span class="tag" style="background:#7d3c98;">Crescimento orgânico</span></div>
+    </div>
+
+  </div>
+  <div class="slide-footer"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+<!-- SLIDE 5: PERFIS DETALHADOS -->
+<div class="slide bg-soft" id="s5">
+  <div class="subtitle-bar">Equipe · Hard &amp; Soft Skills</div>
+  <h2 class="section-title" style="color:#1a2e4a;">Apresentação Detalhada</h2>
+  <div class="divider"></div>
+  <div style="display:flex;flex-direction:column;gap:20px;flex:1;">
+
+    <!-- EDUARDA — PREENCHIDO -->
+    <div class="member-card" style="border-top:3px solid #2e6da4;">
+      <div class="member-header">
+        <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/eduarda.png" alt="Eduarda Vasques" style="width:90px;height:90px;border-radius:12px;object-fit:cover;flex-shrink:0;">
+        <div class="member-info">
+          <h3>Eduarda Vasques</h3>
+          <div class="role">Movida por estruturar soluções financeiras que promovem eficiência e crescimento</div>
+          <div class="meta">📍 São Paulo · SP &nbsp;|&nbsp; 24 anos &nbsp;|&nbsp; Relações Internacionais</div>
+        </div>
+      </div>
+      <ul class="bullet-list" style="columns:2;gap:24px;">
+        <li>Experiência com P&amp;L, indicadores e planejamento financeiro</li>
+        <li>Implementação e melhoria de processos financeiros</li>
+        <li>Atuação em empresa US-based com interface internacional</li>
+        <li>Contato diário com times de EUA, Europa e LATAM</li>
+        <li>Perfil analítico, organizado e orientado a resultados</li>
+        <li>Intercâmbio de 1 ano na Espanha</li>
+      </ul>
+      <div class="skills-row">
+        <div class="skills-box">
+          <h4>Hard Skills</h4>
+          <span class="tag hard">Análise de dados</span>
+          <span class="tag hard">Análise financeira (P&amp;L)</span>
+          <span class="tag hard">Especialização internacional</span>
+          <span class="tag hard">Inglês · Espanhol · Italiano</span>
+        </div>
+        <div class="skills-box">
+          <h4>Soft Skills</h4>
+          <span class="tag soft">Planejamento e organização</span>
+          <span class="tag soft">Proatividade</span>
+          <span class="tag soft">Adaptabilidade</span>
+          <span class="tag soft">Resiliência</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALAIN — PREENCHIDO -->
+    <div class="member-card" style="border-top:3px solid #27a09e;">
+      <div class="member-header">
+        <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/alan.png" alt="Alain Sena" style="width:90px;height:90px;border-radius:12px;object-fit:cover;flex-shrink:0;">
+        <div class="member-info">
+          <h3>Alain Sena</h3>
+          <div class="role" style="color:#27a09e;">Impulsionar resultados através de decisões estratégicas, eficiência operacional e visão de mercado</div>
+          <div class="meta">📍 São Paulo · SP &nbsp;|&nbsp; 26 anos &nbsp;|&nbsp; Administração de Empresas</div>
+        </div>
+      </div>
+      <ul class="bullet-list" style="columns:2;gap:24px;">
+        <li>Atuação no modelo B2B (business-to-business)</li>
+        <li>Responsável por operações logísticas, estoque e distribuição</li>
+        <li>Negociação estratégica com fornecedores e clientes</li>
+        <li>Gestão financeira (custos, margem e fluxo de caixa)</li>
+        <li>Liderança e gestão de equipe</li>
+        <li>Análise de mercado e identificação de oportunidades comerciais</li>
+      </ul>
+      <div class="skills-row">
+        <div class="skills-box">
+          <h4>Hard Skills</h4>
+          <span class="tag hard">Análise de mercado</span>
+          <span class="tag hard">Gestão de estoque e abastecimento</span>
+          <span class="tag hard">Gestão operacional e Logística</span>
+          <span class="tag hard">Negociação Comercial B2B</span>
+        </div>
+        <div class="skills-box">
+          <h4>Soft Skills</h4>
+          <span class="tag soft">Responsabilidade</span>
+          <span class="tag soft">Relacionamento Interpessoal e comunicação</span>
+          <span class="tag soft">Proatividade</span>
+          <span class="tag soft">Tomada de Decisões</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALEXSANDRO — PREENCHIDO -->
+    <div class="member-card" style="border-top:3px solid #1a5276;">
+      <div class="member-header">
+        <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/alexsandro.png" alt="Alexsandro de Oliveira" style="width:90px;height:90px;border-radius:12px;object-fit:cover;flex-shrink:0;">
+        <div class="member-info">
+          <h3>Alexsandro de Oliveira</h3>
+          <div class="role" style="color:#1a5276;">Executivo em gestão empresarial, governança corporativa e alta performance operacional</div>
+          <div class="meta">📍 São Luís · MA &nbsp;|&nbsp; 33 anos &nbsp;|&nbsp; Engenharia Civil</div>
+        </div>
+      </div>
+      <ul class="bullet-list" style="columns:2;gap:24px;">
+        <li>Liderança de setores corporativos: Suprimentos, Financeiro, Controladoria, Compliance e Planejamento Estratégico</li>
+        <li>Gestão de orçamento superior a R$ 1 bilhão em receita e R$ 700 milhões em despesas</li>
+        <li>Atuação nos setores de Construção, Logística, Engenharia e Agronegócio</li>
+        <li>Negociação com bancos nacionais e estrangeiros para funding, capital de giro e investimentos</li>
+        <li>Forte experiência com fornecedores estratégicos, redução de custos e ganhos de margem</li>
+      </ul>
+      <div class="skills-row">
+        <div class="skills-box">
+          <h4>Hard Skills</h4>
+          <span class="tag hard">Governança e Compliance</span>
+          <span class="tag hard">Auditoria</span>
+          <span class="tag hard">Finanças estruturadas</span>
+          <span class="tag hard">Inteligência de mercado</span>
+          <span class="tag hard">Gestão de processos</span>
+          <span class="tag hard">Negociação estratégica</span>
+        </div>
+        <div class="skills-box">
+          <h4>Soft Skills</h4>
+          <span class="tag soft">Liderança empática</span>
+          <span class="tag soft">Comunicação executiva</span>
+          <span class="tag soft">Resiliência</span>
+          <span class="tag soft">Visão sistêmica</span>
+          <span class="tag soft">Planejamento</span>
+          <span class="tag soft">Storytelling</span>
+          <span class="tag soft">Gestão humanizada</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANNA — PREENCHIDO -->
+    <div class="member-card" style="border-top:3px solid #7d3c98;">
+      <div class="member-header">
+        <img src="./Portfólio – Ponto-Mestre _ ARGo FGV_files/anna.png" alt="Anna Laura Perea" style="width:90px;height:90px;border-radius:12px;object-fit:cover;flex-shrink:0;">
+        <div class="member-info">
+          <h3>Anna Laura Perea</h3>
+          <div class="role" style="color:#7d3c98;">Movida por construir soluções digitais e estratégias de crescimento que geram impacto real e resultados mensuráveis</div>
+          <div class="meta">📍 São Paulo · SP &nbsp;|&nbsp; 25 anos &nbsp;|&nbsp; Moda</div>
+        </div>
+      </div>
+      <ul class="bullet-list" style="columns:2;gap:24px;">
+        <li>Bacharel em Moda</li>
+        <li>Experiência em growth, branding e marketing digital com foco em performance</li>
+        <li>Criação e gestão de campanhas para grandes marcas (Dove, TRESemmé, SHEIN, etc.)</li>
+        <li>Desenvolvimento de produto digital (CoScore – plataforma de reviews e comparação de preços)</li>
+        <li>Estratégia de conteúdo e crescimento orgânico (2–3M views mensais)</li>
+        <li>Contato direto com marcas, negociação e gestão de parcerias</li>
+        <li>Perfil analítico, estratégico e orientado a resultados</li>
+      </ul>
+      <div class="skills-row">
+        <div class="skills-box">
+          <h4>Hard Skills</h4>
+          <span class="tag hard">Análise de dados</span>
+          <span class="tag hard">Estratégia de crescimento (Growth)</span>
+          <span class="tag hard">Marketing digital e campanhas</span>
+          <span class="tag hard">Desenvolvimento de produto</span>
+          <span class="tag hard">Analytics (Instagram, TikTok)</span>
+          <span class="tag hard">AI tools (ChatGPT, Claude, Cursor)</span>
+        </div>
+        <div class="skills-box">
+          <h4>Soft Skills</h4>
+          <span class="tag soft">Pensamento estratégico</span>
+          <span class="tag soft">Mentalidade de crescimento (growth mindset)</span>
+          <span class="tag soft">Tomada de decisão baseada em dados</span>
+          <span class="tag soft">Comunicação com stakeholders</span>
+          <span class="tag soft">Autonomia</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-footer"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+<!-- SLIDE 6: CASES -->
+<div class="slide bg-white" id="s6">
+  <div class="subtitle-bar">Experiência prática · Resultados reais</div>
+  <h2 class="section-title" style="color:#1a2e4a;">Cases Práticos</h2>
+  <div class="divider"></div>
+  <div style="display:flex;flex-direction:column;gap:24px;flex:1;">
+
+    <!-- Case Eduarda: PREENCHIDO -->
+    <div class="case-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div>
+          <h3 style="color:#1a2e4a;">Implementação de ERP (NetSuite) — Otimização de Processos Financeiros</h3>
+          <div style="font-size:0.8rem;color:#2e6da4;margin-top:4px;">Eduarda Vasques · Finanças</div>
+        </div>
+        <div><span class="tag">Processos</span><span class="tag">Financeiro</span><span class="tag">ERP</span></div>
+      </div>
+      <div class="case-row">
+        <div class="case-block">
+          <div class="label">⚡ Desafio</div>
+          <p style="font-size:0.85rem;color:#333;">Estruturar e padronizar processos financeiros durante a implementação do sistema ERP NetSuite em ambiente internacional.</p>
+        </div>
+        <div class="case-block">
+          <div class="label">🔧 Ação</div>
+          <p style="font-size:0.85rem;color:#333;">Mapeamento e melhoria de fluxos, adaptação das rotinas ao novo sistema, alinhamento com equipes internacionais e participação em testes e validações.</p>
+        </div>
+        <div class="case-block" style="background:#e8f5e9;">
+          <div class="label" style="color:#2e7d32;">✅ Resultado</div>
+          <p style="font-size:0.85rem;color:#333;">Aumento da eficiência operacional, redução de atividades manuais e maior confiabilidade das informações financeiras, apoiando decisões mais assertivas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Anna: PREENCHIDO -->
+    <div class="case-card" style="border-top-color:#7d3c98;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div>
+          <h3 style="color:#1a2e4a;">CASE — Crescimento Digital &amp; Desenvolvimento de Produto (CoScore + Social Media)</h3>
+          <div style="font-size:0.8rem;color:#7d3c98;margin-top:4px;">Anna Laura Perea · Marketing Digital · Growth</div>
+        </div>
+        <div><span class="tag" style="background:#7d3c98;">Growth</span><span class="tag" style="background:#7d3c98;">Produto Digital</span><span class="tag" style="background:#7d3c98;">Social Media</span></div>
+      </div>
+      <div class="case-row">
+        <div class="case-block">
+          <div class="label">⚡ Desafio</div>
+          <p style="font-size:0.85rem;color:#333;">Construir audiência do zero e transformar engajamento em oportunidades reais de negócio, ao mesmo tempo em que identificava uma dor no mercado de beleza: falta de confiança em reviews e dificuldade de comparar preços.</p>
+        </div>
+        <div class="case-block">
+          <div class="label">🔧 Ação</div>
+          <p style="font-size:0.85rem;color:#333;">Desenvolvimento de estratégia de conteúdo orientada por dados para crescimento em TikTok e Instagram, aliada à análise de comportamento do público para identificar oportunidades de produto. Criação da CoScore, plataforma focada em reviews honestas e comparação de preços, com definição de proposta de valor, estrutura do produto e validação inicial com base na audiência.</p>
+        </div>
+        <div class="case-block" style="background:#f3e8ff;">
+          <div class="label" style="color:#7d3c98;">✅ Resultado</div>
+          <p style="font-size:0.85rem;color:#333;">Crescimento de 0 a +300K seguidores no TikTok e +16K no Instagram, alcançando 2–3M de visualizações mensais. Execução de campanhas com grandes marcas e validação de uma oportunidade real de mercado, evoluindo para o desenvolvimento de um produto digital próprio.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Case Alain -->
+    <div class="case-card" style="border-top-color:#27a09e;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div>
+          <h3 style="color:#1a2e4a;">Otimização Logística — Redução de Custos e Melhoria no Tempo de Entrega</h3>
+          <div style="font-size:0.8rem;color:#27a09e;margin-top:4px;">Alain Sena · Operações · Logística B2B</div>
+        </div>
+        <div><span class="tag" style="background:#27a09e;">Logística</span><span class="tag" style="background:#27a09e;">Operações</span><span class="tag" style="background:#27a09e;">B2B</span></div>
+      </div>
+      <div class="case-row">
+        <div class="case-block">
+          <div class="label">⚡ Desafio</div>
+          <p style="font-size:0.85rem;color:#333;">Ineficiência no processo logístico, com rotas pouco otimizadas e impacto no tempo de entrega e nos custos operacionais.</p>
+        </div>
+        <div class="case-block">
+          <div class="label">🔧 Ação</div>
+          <p style="font-size:0.85rem;color:#333;">Reorganização das rotas de entrega com base na localização dos clientes e volume de pedidos, além de ajuste no planejamento de cargas e frequência de entregas.</p>
+        </div>
+        <div class="case-block" style="background:#e0f7f4;">
+          <div class="label" style="color:#27a09e;">✅ Resultado</div>
+          <p style="font-size:0.85rem;color:#333;">Redução de custos logísticos, melhoria no tempo de entrega e aumento da eficiência operacional no atendimento aos clientes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Alexsandro -->
+    <div class="case-card" style="border-top-color:#1a5276;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div>
+          <h3 style="color:#1a2e4a;">Captação Estruturada de Recursos para Expansão Operacional</h3>
+          <div style="font-size:0.8rem;color:#1a5276;margin-top:4px;">Alexsandro de Oliveira · Finanças Estruturadas · Governança</div>
+        </div>
+        <div><span class="tag" style="background:#1a5276;">Funding</span><span class="tag" style="background:#1a5276;">Financiamento</span><span class="tag" style="background:#1a5276;">Expansão</span></div>
+      </div>
+      <div class="case-row">
+        <div class="case-block">
+          <div class="label">⚡ Desafio</div>
+          <p style="font-size:0.85rem;color:#333;">Viabilizar a expansão operacional da empresa e a aquisição de equipamentos pesados sem comprometer o fluxo de caixa ou a saúde financeira do negócio.</p>
+        </div>
+        <div class="case-block">
+          <div class="label">🔧 Ação</div>
+          <p style="font-size:0.85rem;color:#333;">Estruturação de operação de captação junto a bancos nacionais e estrangeiros, com negociação de condições, garantias e cronograma de desembolso alinhado ao plano de expansão.</p>
+        </div>
+        <div class="case-block" style="background:#e8f0fb;">
+          <div class="label" style="color:#1a5276;">✅ Resultado</div>
+          <p style="font-size:0.85rem;color:#333;">Captação estruturada aprovada, aquisição financiada de equipamentos pesados e crescimento sustentável da operação, mantendo a governança e a solidez financeira da empresa.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-footer"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+<!-- SLIDE 7: POR QUE A PONTO-MESTRE? -->
+<div class="slide bg-dark" id="s7">
+  <div class="subtitle-bar" style="color:#7ec8e3;">Considerações Finais</div>
+  <h2 class="section-title" style="color:#fff;">Por que a Ponto-Mestre?</h2>
+  <div class="divider light"></div>
+  <p style="color:rgba(255,255,255,.65);margin-bottom:32px;max-width:640px;">
+    Nossa equipe vai além das ideias — estruturamos soluções viáveis com foco no resultado. Veja o que nos torna a parceira ideal para a ARGoMenthor:
+  </p>
+  <div class="closing-grid" style="flex:1;align-items:start;">
+    <div class="closing-item">
+      <div class="closing-icon">🔗</div>
+      <div>
+        <h3 style="color:#fff;font-size:1rem;">Complementaridade real</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Integramos análise, estratégia e execução de forma complementar — cada integrante fortalece o que o outro tem de lacuna.</p>
+      </div>
+    </div>
+    <div class="closing-item">
+      <div class="closing-icon">📊</div>
+      <div>
+        <h3 style="color:#fff;font-size:1rem;">Dados que viram decisão</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Transformamos dados em decisões claras e acionáveis, com visão financeira e estratégica integradas.</p>
+      </div>
+    </div>
+    <div class="closing-item">
+      <div class="closing-icon">🌍</div>
+      <div>
+        <h3 style="color:#fff;font-size:1rem;">Perspectiva multicultural</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Vivências internacionais que ampliam nossa capacidade de entender e navegar contextos diversos.</p>
+      </div>
+    </div>
+    <div class="closing-item">
+      <div class="closing-icon">🎯</div>
+      <div>
+        <h3 style="color:#fff;font-size:1rem;">Impacto real e mensurável</h3>
+        <p style="color:rgba(255,255,255,.65);font-size:0.85rem;">Foco em resultados viáveis e de impacto real — não apenas ideias, mas entregas concretas.</p>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:28px;background:rgba(255,255,255,.06);border-radius:12px;padding:20px 24px;border:1px solid rgba(255,255,255,.12);">
+    <p style="color:#fff;font-size:1.05rem;font-weight:600;text-align:center;">
+      "Nossa equipe vai além das ideias, estruturando soluções viáveis com foco no resultado."
+    </p>
+  </div>
+  <div class="slide-footer light"><span>Ponto-Mestre · ARGo FGV</span></div>
+</div>
+
+
+</div><!-- end slides -->
+
+<script>
+  const nav = document.querySelector('nav');
+  const slides = document.querySelectorAll('.slide');
+  const btns = document.querySelectorAll('.slides-nav button');
+
+  function toggleNav() {
+    nav.classList.toggle('open');
+  }
+
+  function closeNavOnMobile() {
+    if (window.innerWidth <= 860) nav.classList.remove('open');
+  }
+
+  function goTo(n) {
+    slides.forEach((s,i) => { s.classList.toggle('active', i === n); });
+    btns.forEach((b,i) => { b.classList.toggle('active', i === n); });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeNavOnMobile();
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 860) nav.classList.remove('open');
+  });
+</script>
+
+
+</body></html>
